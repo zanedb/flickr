@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets'
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/Header.astro'
+
+export function getStaticPaths() {
+  const flicks = import.meta.glob('../assets/flicks/*.{jpeg,jpg,png}', {
+    eager: false,
+  })
+
+  const paths = Object.keys(flicks).map((f) => ({
+    params: {
+      flick: f.replace('../assets/flicks/', ''),
+    },
+  }))
+
+  return paths
+}
+
+const { flick } = Astro.params
+const src = import(`../assets/flicks/${flick}`)
+---
+
+<Layout>
+  <Header />
+  <figure class="flex justify-center h-[calc(100%-8rem)] w-full">
+    <Image
+      src={src}
+      alt="Flick"
+      class="border-2 md:border-4 md:border-x-6 border-pink-500 m-4 max-h-full w-auto"
+    />
+  </figure>
+</Layout>
