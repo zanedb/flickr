@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+const flicks = Object.values(
+  import.meta.glob<{ default: ImageMetadata }>(
+    '../assets/flicks/*.{jpeg,jpg,png}',
+    {
+      eager: true,
+    }
+  )
+)
+---
+
+<section>
+  <div class="md:columns-2 xl:columns-4 3xl:columns-4 lg:gap-6 xl:gap-8 pr-8">
+    {
+      flicks.map((img) => (
+        <a href={img.default.src.match(/\/flicks\/([^?]+)/)?.[1]}>
+          <figure>
+            <Image
+              src={img.default}
+              alt="Flick"
+              class="border-2 md:border-4 md:border-x-6 border-pink-500 m-4"
+            />
+          </figure>
+        </a>
+      ))
+    }
+  </div>
+</section>

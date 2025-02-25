@@ -3,12 +3,6 @@ import { Image } from 'astro:assets'
 import profile from '../assets/profile.jpg'
 import fb from '../assets/icons/fb.webp'
 import twt from '../assets/icons/twitter.jpg'
-
-const flicks = Object.values(
-  import.meta.glob('../assets/flicks/*.{jpeg,jpg,png}', {
-    eager: true,
-  })
-)
 ---
 
 <header>
@@ -16,10 +10,11 @@ const flicks = Object.values(
     <nav class="flex">
       <Image
         src={profile}
-        alt="Profile picture"
+        alt="Profile avatar"
         width="64"
         height="64"
         class="border-pink-200 border-2"
+        loading="eager"
       />
       <div
         class="tracking-tighter scale-x-75 -translate-x-[12.5%] pl-2 h-16 flex flex-col justify-between"
@@ -29,7 +24,9 @@ const flicks = Object.values(
           <span class="text-sm text-gray-500 pl-2">2 items / 1 view</span>
         </div>
         <ol class="flex line-clamp-1 cursor-pointer text-blue-400 *:pr-2">
-          <li class="font-bold text-black">Photostream</li>
+          <li class="font-bold text-black">
+            <a href="/">Photostream</a>
+          </li>
           <li>Sets</li>
           <li>Favorites</li>
           <li>Galleries</li>
@@ -42,28 +39,28 @@ const flicks = Object.values(
       </div>
     </nav>
     <div class="tracking-tighter pt-2 flex h-8 items-center">
-      <button class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2">
+      <button
+        class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
+      >
         Slideshow
       </button>
-      <Image src={fb} alt="Facebook icon" class="h-6 w-6 ml-2" />
-      <Image src={twt} alt="Twitter icon" class="h-[26px] w-[26px] mr-2" />
-      <button class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2">
+      <Image
+        src={fb}
+        alt="Facebook icon"
+        class="h-6 w-6 ml-2"
+        loading="eager"
+      />
+      <Image
+        src={twt}
+        alt="Twitter icon"
+        class="h-[26px] w-[26px] mr-2"
+        loading="eager"
+      />
+      <button
+        class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
+      >
         Share ▼
       </button>
     </div>
   </div>
 </header>
-
-<section>
-  <div class="md:columns-2 xl:columns-4 3xl:columns-4 lg:gap-6 xl:gap-8 pr-8">
-    {
-      flicks.map((img) => (
-        <Image
-          src={img.default}
-          alt="Flickr image"
-          class="border-2 md:border-4 md:border-x-6 border-pink-500 m-4" // scale-x-75 -translate-x-[12.5%] cursor-crosshair transition-transform duration-300 hover:scale-105
-        />
-      ))
-    }
-  </div>
-</section>
