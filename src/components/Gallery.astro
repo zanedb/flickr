@@ -17,15 +17,31 @@ const flicks = Object.values(
     {
       flicks.map((img) => (
         <a href={img.default.src.match(/\/flicks\/([^?]+)/)?.[1]}>
-          <figure>
-            <Image
-              src={img.default}
-              alt="Flick"
-              class="border-2 md:border-4 md:border-x-6 border-pink-500 m-4"
-            />
-          </figure>
+          <Image
+            src={img.default}
+            alt="Flick"
+            class="border-2 md:border-4 md:border-x-6 border-pink-500 m-4"
+          />
         </a>
       ))
     }
   </div>
+  <script>
+    const play = (sound: string) => {
+      const click = new Audio(`/sfx/${sound}.mp3`)
+      click.play()
+    }
+
+    document.addEventListener('astro:page-load', () => {
+      const anchors = document.querySelectorAll('a')
+      anchors.forEach((i) => {
+        i.addEventListener('click', play.bind(null, 'click'))
+      })
+
+      const flicks = document.querySelectorAll('img')
+      flicks.forEach((i) => {
+        i.addEventListener('click', play.bind(null, 'shutter'))
+      })
+    })
+  </script>
 </section>
