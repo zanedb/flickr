@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import profile from '../assets/profile.jpg'
+import logo from '../assets/logo.jpg'
 import fb from '../assets/icons/fb.webp'
 import twt from '../assets/icons/twitter.jpg'
 ---
@@ -38,29 +39,32 @@ import twt from '../assets/icons/twitter.jpg'
         </ol>
       </div>
     </nav>
-    <div class="tracking-tighter pt-2 flex h-8 items-center">
-      <button
-        class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
-      >
-        Slideshow
-      </button>
-      <Image
-        src={fb}
-        alt="Facebook icon"
-        class="h-6 w-6 ml-2"
-        loading="eager"
-      />
-      <Image
-        src={twt}
-        alt="Twitter icon"
-        class="h-[26px] w-[26px] mr-2"
-        loading="eager"
-      />
-      <button
-        class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
-      >
-        Share ▼
-      </button>
+    <div class="flex flex-col items-end">
+      <Image src={logo} alt="Flickr logo" class="w-[50%]" loading="eager" />
+      <div class="tracking-tighter pt-2 flex h-8 items-center">
+        <button
+          class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
+        >
+          Slideshow
+        </button>
+        <Image
+          src={fb}
+          alt="Facebook icon"
+          class="h-6 w-6 ml-2"
+          loading="eager"
+        />
+        <Image
+          src={twt}
+          alt="Twitter icon"
+          class="h-[26px] w-[26px] mr-2"
+          loading="eager"
+        />
+        <button
+          class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
+        >
+          Share ▼
+        </button>
+      </div>
     </div>
   </div>
 </header>
