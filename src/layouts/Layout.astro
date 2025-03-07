@@ -31,3 +31,48 @@ import './src/styles/global.css'
     background-attachment: fixed;
   }
 </style>
+
+<script is:inline>
+  /*
+    Scroll position persistence
+  */
+  const getPageKey = () => {
+    return `scrollPos_${window.location.pathname}${window.location.search}`
+  }
+
+  const saveScrollPosition = () => {
+    const scrollPos = {
+      x: window.scrollX,
+      y: window.scrollY,
+    }
+
+    // Only save scroll pos on gallery (for now)
+    if (window.location.pathname !== '/') return
+
+    sessionStorage.setItem(getPageKey(), JSON.stringify(scrollPos))
+  }
+
+  const restoreScrollPosition = () => {
+    const scrollPosJson = sessionStorage.getItem(getPageKey())
+
+    if (scrollPosJson) {
+      try {
+        const scrollPos = JSON.parse(scrollPosJson)
+        window.scrollTo(scrollPos.x, scrollPos.y)
+      } catch (e) {
+        console.error('Failed to parse saved scroll position', e)
+        window.scrollTo(0, 0)
+      }
+    }
+  }
+
+  // Listeners for navigation away, page swap, and initial load
+  window.addEventListener('beforeunload', saveScrollPosition)
+  document.addEventListener('astro:before-swap', saveScrollPosition)
+  document.addEventListener('DOMContentLoaded', restoreScrollPosition)
+  document.addEventListener('astro:after-swap', restoreScrollPosition)
+  document.addEventListener('astro:page-load', restoreScrollPosition)
+
+  // Save position periodically to handle cases like browser crashes
+  setInterval(saveScrollPosition, 1000)
+</script>
