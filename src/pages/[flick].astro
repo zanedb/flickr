@@ -23,7 +23,10 @@ const src = import(`../assets/flicks/${flick}`)
 
 <Layout>
   <Header />
-  <figure class="flex justify-center h-[calc(100%-8rem)] w-full">
+  <figure
+    class="flex justify-center h-[calc(100%-8rem)] w-full"
+    transition:name={flick}
+  >
     <Image
       src={src}
       alt="Flick"
