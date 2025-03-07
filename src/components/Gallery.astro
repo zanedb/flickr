@@ -37,6 +37,7 @@ const flicks = Object.values(
   */
   const play = (sound: string) => {
     const click = new Audio(`/sfx/${sound}.mp3`)
+    click.volume = 0.7
     click.play()
   }
 
