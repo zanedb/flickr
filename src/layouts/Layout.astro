@@ -75,4 +75,36 @@ import '../styles/global.css'
 
   // Save position periodically to handle cases like browser crashes
   setInterval(saveScrollPosition, 1000)
+
+  /*
+    Sound FX
+  */
+  const play = (fx, vol = 0.7) => {
+    const sound = new Audio(`/sfx/${fx}.mp3`)
+    sound.volume = vol
+    sound.play()
+  }
+
+  // Click FX on any click
+  document.addEventListener('click', (e) => play('click'))
+
+  // Shutter FX on image click
+  document.addEventListener('astro:page-load', () => {
+    const flicks = document.querySelectorAll('img')
+    flicks.forEach((i) => {
+      i.addEventListener('click', (e) =>
+        setTimeout(() => play('shutter'), Math.floor(Math.random() * 401) + 400)
+      )
+    })
+  })
+
+  /*
+    Global sound FX
+  */
+  document.addEventListener('DOMContentLoaded', () => {
+    const bg = new Audio(`/sfx/rain.mp3`)
+    bg.volume = 0.2
+    bg.loop = true
+    // bg.play()
+  })
 </script>
