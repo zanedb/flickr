@@ -18,8 +18,7 @@ export function getStaticPaths() {
 }
 
 const { flick } = Astro.params
-/* @vite-ignore */
-const src = import(`../assets/flicks/${flick}`)
+const src = import(`../assets/flicks/${flick.slice(0, -4)}.jpg`)
 ---
 
 <Layout>
@@ -42,11 +41,8 @@ const src = import(`../assets/flicks/${flick}`)
     import { navigate } from 'astro:transitions/client'
 
     const sfxTrigger = () => {
-      if (
-        // only trigger sound on jpg or jpeg-ending URLs
-        window.location.pathname.slice(-4) === '.jpg' ||
-        window.location.pathname.slice(-5) === '.jpeg'
-      ) {
+      // only trigger sound on images
+      if (window.location.pathname.slice(-4) === '.jpg') {
         console.log('IMAGE LOADED')
         flick = window.location.pathname.replace(/\.[^/.]+$/, '').substring(1)
         console.log(`PLAYING /sfx/ambience/${flick}.mp3`)
