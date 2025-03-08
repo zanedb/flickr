@@ -35,43 +35,22 @@ const src = import(`../assets/flicks/${flick.slice(0, -4)}.jpg`)
     />
   </figure>
   <script>
-    // If corresponding ambience sfx with same title as {flick} exists, play it on load
-    let flick = window.location.pathname.replace(/\.[^/.]+$/, '').substring(1)
-    let sfx = new Audio()
     import { navigate } from 'astro:transitions/client'
 
-    const sfxTrigger = () => {
-      // only trigger sound on images
-      if (window.location.pathname.slice(-4) === '.jpg') {
-        console.log('IMAGE LOADED')
-        flick = window.location.pathname.replace(/\.[^/.]+$/, '').substring(1)
-        console.log(`PLAYING /sfx/ambience/${flick}.mp3`)
-
-        sfx = new Audio(`/sfx/ambience/${flick}.mp3`)
-        sfx.volume = 0.5
-        // sfx.loop = true
-        sfx.play()
-      } else {
-        console.log('UNLOADING SFX')
-
-        sfx.pause()
-        sfx.currentTime = 0
-        flick = ''
-      }
-    }
-
+    // Clicking on the background or pressing escape will navigate back to the gallery
     document.addEventListener('astro:page-load', () => {
-      sfxTrigger()
-
       const bg = document.getElementById('bg')
       if (bg) {
         bg.addEventListener('click', function () {
-          const click = new Audio(`/sfx/click.mp3`)
           navigate('/')
-          click.volume = 0.7
-          click.play()
         })
       }
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          navigate('/')
+        }
+      })
     })
   </script>
 </Layout>
