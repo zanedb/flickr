@@ -1,10 +1,13 @@
 ---
+import { Image } from 'astro:assets'
 import Header from '../components/Header.astro'
 import Gallery from '../components/Gallery.astro'
 import Layout from '../layouts/Layout.astro'
+import corner from '../assets/corner.png'
 ---
 
 <Layout>
   <Header />
   <Gallery />
+  <Image src={corner} alt="Corner decoration" class="-z-10 -translate-y-48" />
 </Layout>
