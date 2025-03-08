@@ -17,8 +17,12 @@ const flicks = Object.values(
     {
       flicks.map((img) => (
         <a
-          href={img.default.src.match(/\/flicks\/([^?]+)/)?.[1]}
-          transition:name={img.default.src.match(/\/flicks\/([^?]+)/)?.[1]}
+          href={
+            '/' + img.default.src.split('/_astro/')[1].split('.')[0] + '.jpg'
+          }
+          transition:name={
+            img.default.src.split('/_astro/')[1].split('.')[0] + '.jpg'
+          }
         >
           <Image
             src={img.default}
