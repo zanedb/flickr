@@ -22,6 +22,50 @@ import SFX from '../components/SFX.astro'
 
 <script is:inline>
   /*
+    Auto scroll (optional)
+  */
+  let scrollInterval
+  let interactionTimer
+  let isScrolling = false
+
+  function startScrolling() {
+    if (!isScrolling) {
+      isScrolling = true
+      scrollInterval = setInterval(() => {
+        // scroll to top if it reaches the bottom
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.scrollHeight - 5
+        ) {
+          window.scrollTo(0, 0)
+          handleMouseMove()
+        } else {
+          window.scrollBy({
+            top: 1,
+            behavior: 'auto',
+          })
+        }
+      }, 20)
+    }
+  }
+
+  function stopScrolling() {
+    if (isScrolling) {
+      clearInterval(scrollInterval)
+      isScrolling = false
+    }
+  }
+
+  function handleMouseMove() {
+    stopScrolling()
+    clearTimeout(interactionTimer)
+
+    interactionTimer = setTimeout(() => {
+      startScrolling()
+    }, 10000)
+  }
+
+  /*
     Scroll position persistence
   */
   const getPageKey = () => {
@@ -76,6 +120,7 @@ import SFX from '../components/SFX.astro'
   // Click FX on any click
   document.addEventListener('click', (e) => play('click', 0.5))
 
+  // Page load listeners
   document.addEventListener('astro:page-load', () => {
     // Shutter FX on image click
     const flicks = document.querySelectorAll('img[data-click-sfx="true"]')
@@ -100,5 +145,9 @@ import SFX from '../components/SFX.astro'
 
     const closeButton = document.querySelector('[data-modal-close]')
     closeButton?.addEventListener('click', () => dialog?.close())
+
+    // Scrolling
+    startScrolling()
+    document.addEventListener('mousemove', handleMouseMove)
   })
 </script>
