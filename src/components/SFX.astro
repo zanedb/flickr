@@ -1,0 +1,62 @@
+<script>
+  class BackgroundSFX {
+    private audio: HTMLAudioElement | null = null
+
+    constructor() {
+      this.setupEventListeners()
+    }
+
+    private setupEventListeners() {
+      // Initial page load
+      this.checkAndPlayAudio()
+
+      // View transitions
+      document.addEventListener('astro:page-load', () => {
+        this.checkAndPlayAudio()
+      })
+
+      // Cleanup on navigation
+      document.addEventListener('astro:before-swap', () => {
+        this.stopAudio()
+      })
+    }
+
+    private checkAndPlayAudio() {
+      const currentUrl = window.location.href
+      const isImage = currentUrl.toLowerCase().endsWith('.jpg')
+      const audioPath = isImage
+        ? `/sfx/ambience/${currentUrl.split('/').pop()?.split('.')[0]}.mp3`
+        : `/sfx/rain.mp3`
+
+      if (!this.audio) {
+        this.audio = new Audio(audioPath)
+        this.audio.loop = true
+        if (!isImage) this.audio.volume = 0.4
+      } else {
+        this.audio.src = audioPath
+      }
+
+      this.playAudio()
+    }
+
+    private async playAudio() {
+      if (!this.audio) return
+
+      try {
+        await this.audio.play()
+        console.log(`Playing background audio: ${this.audio.src}`)
+      } catch (error) {
+        console.error('Audio play failed:', error)
+      }
+    }
+
+    private stopAudio() {
+      if (this.audio) {
+        this.audio.pause()
+        this.audio.currentTime = 0
+      }
+    }
+  }
+
+  new BackgroundSFX()
+</script>
