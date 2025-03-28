@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import Analytics from '@vercel/analytics/astro'
 import { ClientRouter } from 'astro:transitions'
 import SFX from '../components/SFX.astro'
 ---
@@ -17,6 +18,7 @@ import SFX from '../components/SFX.astro'
   <body>
     <slot />
     <SFX />
+    <Analytics />
   </body>
 </html>
 
