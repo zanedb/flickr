@@ -27,30 +27,45 @@ const src = import(`../assets/flicks/${flick.slice(0, -4)}.jpg`)
     class="flex justify-center h-[calc(100%-8rem)] w-full"
     transition:name={flick}
   >
-    <div class="absolute top-0 left-0 w-[100vw] h-[100vh] -z-10" id="bg"></div>
-    <Image
-      src={src}
-      alt="Flick"
-      class="border-2 md:border-4 md:border-x-6 border-pink-500 m-4 max-h-full w-auto"
-    />
+    <div class="m-4 max-h-full w-auto">
+      <Image
+        src={src}
+        alt="Flick"
+        id="flick"
+        class="border-2 md:border-4 md:border-x-6 border-pink-500 w-full h-full"
+      />
+    </div>
   </figure>
   <script>
     import { navigate } from 'astro:transitions/client'
 
     // Clicking on the background or pressing escape will navigate back to the gallery
-    document.addEventListener('astro:page-load', () => {
-      const bg = document.getElementById('bg')
-      if (bg) {
-        bg.addEventListener('click', function () {
-          navigate('/')
-        })
-      }
+    document.addEventListener('click', (event) => {
+      const target = document.querySelector('#flick') // Assumed that background = anything not the image
+      const withinBoundaries = event.composedPath().includes(target!)
+      const clickedButton = event
+        .composedPath()
+        .some(
+          (element) =>
+            element instanceof HTMLButtonElement ||
+            (element instanceof HTMLAnchorElement && element.href)
+        )
 
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-          navigate('/')
-        }
-      })
+      if (
+        !withinBoundaries &&
+        !clickedButton &&
+        window.location.href.slice(-4) === '.jpg'
+      ) {
+        console.log('Navigating back to gallery')
+        navigate('/')
+      }
+    })
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && window.location.href.slice(-4) === '.jpg') {
+        console.log('Esc key pressed, navigating back to gallery')
+        navigate('/')
+      }
     })
   </script>
 </Layout>
