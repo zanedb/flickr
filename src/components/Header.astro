@@ -4,6 +4,13 @@ import profile from '../assets/profile.jpg'
 import logo from '../assets/logo.jpg'
 import fb from '../assets/icons/fb.webp'
 import twt from '../assets/icons/twitter.jpg'
+
+// image count
+const flicks = Object.values(
+  import.meta.glob<{ default: ImageMetadata }>(
+    '../assets/flicks/*.{jpeg,jpg,png}'
+  )
+)
 ---
 
 <dialog
@@ -36,9 +43,11 @@ import twt from '../assets/icons/twitter.jpg'
       >
         <div class="flex items-baseline">
           <h1 class="text-3xl font-bold">Your photostream</h1>
-          <span class="text-sm text-gray-500 pl-2">2 items / 1 view</span>
+          <span class="text-sm text-gray-500 pl-2"
+            >{flicks.length} items / 1 view</span
+          >
         </div>
-        <ol class="flex line-clamp-1 cursor-pointer text-blue-400 *:pr-2">
+        <ol class="flex z-10 line-clamp-1 cursor-pointer text-blue-400 *:mr-2">
           <li class="font-bold text-black">
             <a href="/">Photostream</a>
           </li>
