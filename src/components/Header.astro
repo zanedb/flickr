@@ -6,6 +6,20 @@ import fb from '../assets/icons/fb.webp'
 import twt from '../assets/icons/twitter.jpg'
 ---
 
+<dialog
+  id="attr"
+  class="relative top-[50%] left-[50%] -translate-[50%] border-black border-6 text-center"
+>
+  <button class="absolute top-0 right-2 p-2 cursor-pointer" data-modal-close
+    >✕</button
+  >
+  <div class="p-4 md:px-24 md:py-12 lg:px-36 xl:px-48 font-mono">
+    <h3 class="font-bold text-lg my-4">© 2025 ctx / zdb</h3>
+    <p>website by <a href="/cool114%20(2).jpg" class="underline">@zanedb</a></p>
+    <p>pics/sfx by ctx</p>
+  </div>
+</dialog>
+
 <header>
   <div class="flex justify-between p-4 overflow-x-hidden">
     <nav class="flex">
@@ -51,6 +65,7 @@ import twt from '../assets/icons/twitter.jpg'
       <div class="tracking-tighter pt-2 flex h-8 items-center">
         <button
           class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
+          data-modal-open
         >
           Slideshow
         </button>
@@ -68,6 +83,7 @@ import twt from '../assets/icons/twitter.jpg'
         />
         <button
           class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
+          data-modal-open
         >
           Share ▼
         </button>

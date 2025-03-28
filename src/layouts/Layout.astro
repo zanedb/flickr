@@ -90,16 +90,15 @@ import SFX from '../components/SFX.astro'
         }
       })
     })
-    })
-  })
 
-  /*
-    Global sound FX
-  */
-  document.addEventListener('DOMContentLoaded', () => {
-    const bg = new Audio(`/sfx/rain.mp3`)
-    bg.volume = 0.2
-    bg.loop = true
-    // bg.play()
+    // Modal open
+    const dialog = document.getElementById('attr')
+    const buttons = document.querySelectorAll('[data-modal-open]')
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => dialog?.showModal())
+    })
+
+    const closeButton = document.querySelector('[data-modal-close]')
+    closeButton?.addEventListener('click', () => dialog?.close())
   })
 </script>
