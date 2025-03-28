@@ -13,15 +13,21 @@ const flicks = Object.values(
 ---
 
 <section>
-  <div class="columns-2 lg:columns-3 xl:columns-5 lg:gap-6 xl:gap-8 pr-8">
+  <div class="columns-2 lg:columns-3 xl:columns-5 lg:gap-6 xl:gap-8 mr-8">
     {
       flicks.map((img) => (
         <a
           href={
-            '/' + img.default.src.split('/_astro/')[1].split('.')[0] + '.jpg'
+            import.meta.env.PROD
+              ? '/' +
+                img.default.src.split('/_astro/')[1].split('.')[0] +
+                '.jpg'
+              : img.default.src.match(/\/flicks\/([^?]+)/)?.[1]
           }
           transition:name={
-            img.default.src.split('/_astro/')[1].split('.')[0] + '.jpg'
+            import.meta.env.PROD
+              ? img.default.src.split('/_astro/')[1].split('.')[0] + '.jpg'
+              : img.default.src.match(/\/flicks\/([^?]+)/)?.[1]
           }
         >
           <Image
