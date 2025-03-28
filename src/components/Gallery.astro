@@ -18,6 +18,8 @@ const flicks = Object.values(
       flicks.map((img) => (
         <a
           href={
+            // Since the URL/transition is the filename, need to obtain it
+            // It doesn't seem like Astro wants us to, so.. this
             import.meta.env.PROD
               ? '/' +
                 img.default.src.split('/_astro/')[1].split('.')[0] +
@@ -34,6 +36,7 @@ const flicks = Object.values(
             src={img.default}
             alt="Flick"
             class="border-2 md:border-4 md:border-x-6 border-pink-500 m-4 w-full"
+            data-click-sfx="true"
           />
         </a>
       ))

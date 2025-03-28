@@ -1,11 +1,9 @@
+@import 'tailwindcss';
+
 @layer reset {
   *::before,
   *::after {
     box-sizing: border-box;
-  }
-
-  * {
-    margin: 0;
   }
 
   html,
@@ -43,12 +41,14 @@
     overflow-wrap: break-word;
   }
 
-  #root {
+  html {
     isolation: isolate;
   }
 }
 
-@import 'tailwindcss';
+body {
+  background: url('/backdrop.jpg') no-repeat center/cover fixed;
+}
 
 /* @font-face {
     font-family: DomaineFallback;
