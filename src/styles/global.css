@@ -46,22 +46,24 @@
   }
 }
 
+@theme {
+  --font-domaine: 'DomaineText', DomaineFallback, serif;
+  --accent: oklch(52% 49% 258deg);
+}
+
 body {
   background: url('/backdrop.jpg') no-repeat center/cover fixed;
 }
 
-/* @font-face {
-    font-family: DomaineFallback;
-    src: local("Georgia");
+::-webkit-scrollbar {
+  width: 1.5em;
+  height: 2em;
 }
 
-@font-face {
-    src: url("/fonts/DomaineTextRegular.woff2") format("woff2");
-    font-family: "DomaineText";
-    font-style: normal;
-    font-display: swap;
-} */
+::-webkit-scrollbar-track-piece {
+  background: #fff;
+}
 
-@theme {
-  --font-domaine: 'DomaineText', DomaineFallback, serif;
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
 }
