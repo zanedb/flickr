@@ -6,15 +6,16 @@
 <div
   class="ml-4 border-2 md:border-4 md:border-x-6 border-pink-500 w-full h-auto"
   transition:name="webcam"
+  id="webcamContainer"
 >
-  <video id="videoElement" autoplay playsinline class="object-cover"></video>
+  <video id="webcam" autoplay playsinline class="object-cover"></video>
 </div>
 
 <script is:inline>
   const startButton = document.getElementById('startButton')
 
   async function startWebcam() {
-    const videoElement = document.getElementById('videoElement')
+    const videoElement = document.getElementById('webcam')
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -28,7 +29,10 @@
       stopButton.disabled = false
       console.log('Camera is active.')
     } catch (error) {
-      videoElement.remove()
+      // If webcam access fails, remove the webcam container from the DOM
+      const webcamWrapper = document.getElementById('webcamContainer')
+      webcamWrapper.remove()
+
       console.error('Error accessing webcam:', error)
       console.log(
         `Error: ${error.message}. Make sure your camera is connected and you've granted permission.`
