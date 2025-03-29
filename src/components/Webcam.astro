@@ -16,6 +16,7 @@
 
   async function startWebcam() {
     const videoElement = document.getElementById('webcam')
+    if (!videoElement) return
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -31,7 +32,7 @@
     } catch (error) {
       // If webcam access fails, remove the webcam container from the DOM
       const webcamWrapper = document.getElementById('webcamContainer')
-      webcamWrapper.remove()
+      if (webcamWrapper) webcamWrapper.remove()
 
       console.error('Error accessing webcam:', error)
       console.log(
