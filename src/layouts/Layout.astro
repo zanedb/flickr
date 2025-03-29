@@ -15,7 +15,7 @@ import SFX from '../components/SFX.astro'
     <title>Flickr: Explore!</title>
     <ClientRouter />
   </head>
-  <body>
+  <body class="vhs-overlay">
     <slot />
     <SFX />
     <Analytics />
@@ -138,7 +138,7 @@ import SFX from '../components/SFX.astro'
       })
     })
 
-    // Modal open
+    // Modal
     const dialog = document.getElementById('attr')
     const buttons = document.querySelectorAll('[data-modal-open]')
     buttons.forEach((button) => {
@@ -147,6 +147,14 @@ import SFX from '../components/SFX.astro'
 
     const closeButton = document.querySelector('[data-modal-close]')
     closeButton?.addEventListener('click', () => dialog?.close())
+
+    // Animations
+    const paranoia = document.querySelector('[data-paranoia-trigger]')
+    paranoia?.addEventListener('click', () => {
+      document.body.hasAttribute('data-paranoia')
+        ? document.body.removeAttribute('data-paranoia')
+        : document.body.setAttribute('data-paranoia', 'true')
+    })
 
     // Scrolling
     startScrolling()
