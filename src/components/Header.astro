@@ -20,7 +20,7 @@ const flicks = Object.values(
     const req = await fetch('https://api.zanedb.com/api/views/flickr')
     const api = await req.json()
     const viewCount = document.querySelector('#view-count')
-    viewCount?.setHTMLUnsafe(api.views.toString())
+    viewCount.innerHTML = api.views.toString()
   }
 </script>
 
