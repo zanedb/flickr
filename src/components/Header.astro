@@ -13,6 +13,17 @@ const flicks = Object.values(
 )
 ---
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => updateViewCount())
+
+  async function updateViewCount() {
+    const req = await fetch('https://api.zanedb.com/api/views/flickr')
+    const api = await req.json()
+    const viewCount = document.querySelector('#view-count')
+    viewCount?.setHTMLUnsafe(api.views.toString())
+  }
+</script>
+
 <dialog
   id="attr"
   class="relative top-[50%] left-[50%] -translate-[50%] border-black border-6 text-center"
@@ -27,7 +38,7 @@ const flicks = Object.values(
   </div>
 </dialog>
 
-<header>
+<header transition:name="header" transition:persist>
   <div class="flex justify-between p-4 overflow-x-hidden">
     <nav class="flex">
       <Image
@@ -44,7 +55,7 @@ const flicks = Object.values(
         <div class="flex items-baseline">
           <h1 class="text-3xl font-bold">Your photostream</h1>
           <span class="text-sm text-gray-500 pl-2"
-            >{flicks.length} items / 1 view</span
+            >{flicks.length} items / <span id="view-count"></span> views</span
           >
         </div>
         <ol class="flex z-10 line-clamp-1 cursor-pointer text-blue-400 *:mr-2">
@@ -73,8 +84,8 @@ const flicks = Object.values(
       </a>
       <div class="tracking-tighter pt-2 flex h-8 items-center">
         <button
-          class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
-          data-modal-open
+          class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2 cursor-pointer"
+          data-paranoia-trigger
         >
           Slideshow
         </button>
@@ -91,7 +102,7 @@ const flicks = Object.values(
           loading="eager"
         />
         <button
-          class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2"
+          class="bg-gray-100 text-black text-sm border-gray-300 border-1 p-1 px-2 cursor-pointer"
           data-modal-open
         >
           Share ▼
