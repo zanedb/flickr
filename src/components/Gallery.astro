@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import type { ImageMetadata } from 'astro'
+import Webcam from './Webcam.astro'
 
 const flicks = Object.values(
   import.meta.glob<{ default: ImageMetadata }>(
@@ -15,7 +16,7 @@ const flicks = Object.values(
 <section>
   <div class="columns-2 lg:columns-3 xl:columns-5 lg:gap-6 xl:gap-8 mr-8">
     {
-      flicks.map((img) => (
+      flicks.map((img, index) => (
         <a
           href={
             // Since the URL/transition is the filename, need to obtain it
@@ -39,6 +40,9 @@ const flicks = Object.values(
             data-click-sfx="true"
           />
         </a>
+        <div>
+          {index === 40 && <Webcam />}
+        </div>
       ))
     }
   </div>

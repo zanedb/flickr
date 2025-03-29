@@ -1,0 +1,42 @@
+<div class="controls hidden">
+  <button id="startButton">Start Camera</button>
+  <button id="stopButton" disabled>Stop Camera</button>
+</div>
+
+<div
+  class="ml-4 border-2 md:border-4 md:border-x-6 border-pink-500 w-full h-auto"
+  transition:name="webcam"
+>
+  <video id="videoElement" autoplay playsinline class="object-cover"></video>
+</div>
+
+<script is:inline>
+  const startButton = document.getElementById('startButton')
+
+  async function startWebcam() {
+    const videoElement = document.getElementById('videoElement')
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false,
+      })
+
+      videoElement.srcObject = stream
+
+      startButton.disabled = true
+      stopButton.disabled = false
+      console.log('Camera is active.')
+    } catch (error) {
+      videoElement.remove()
+      console.error('Error accessing webcam:', error)
+      console.log(
+        `Error: ${error.message}. Make sure your camera is connected and you've granted permission.`
+      )
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    startWebcam()
+  })
+</script>
