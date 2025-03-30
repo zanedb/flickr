@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/Header.astro'
+import Webcam from '../components/Webcam.astro'
+---
+
+<Layout>
+  <Header />
+  <figure class="flex justify-center h-[calc(100%-8rem)] w-full">
+    <div class="max-h-full w-auto flex items-center" data-paranoia>
+      <Webcam />
+    </div>
+  </figure>
+  <script>
+    import { navigate } from 'astro:transitions/client'
+
+    // Clicking on the background or pressing escape will navigate back to the gallery
+    document.addEventListener('click', (event) => {
+      const target = document.querySelector('webcam') // Assumed that background = anything not the video
+      const withinBoundaries = event.composedPath().includes(target!)
+      const clickedButton = event
+        .composedPath()
+        .some(
+          (element) =>
+            element instanceof HTMLButtonElement ||
+            (element instanceof HTMLAnchorElement && element.href)
+        )
+
+      if (
+        !withinBoundaries &&
+        !clickedButton &&
+        window.location.href.slice(-4) === '/cam'
+      ) {
+        console.log('Navigating back to gallery')
+        navigate('/')
+      }
+    })
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && window.location.href.slice(-4) === '/cam') {
+        console.log('Esc key pressed, navigating back to gallery')
+        navigate('/')
+      }
+    })
+  </script>
+</Layout>
